@@ -33,5 +33,3 @@ class Solution:
             min_time = max(min_time, calculateTime(course))
 
         return min_time
-
-
