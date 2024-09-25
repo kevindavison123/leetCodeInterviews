@@ -106,6 +106,30 @@ def knight_move(knight_pos, target_pos, size):
     return -1
 
 
+def star_node_find_center(edges):
+    # count the number of degrees, if the number comes out to n-1 then it is the center
+    # of the star graph
+    n = len(edges)
+    degree = {}
+    for edge in edges:
+        if edge[0] not in degree:
+            degree[edge[0]] = 0
+        else:
+            degree[edge[0]] += 1
+        if edge[1] not in degree:
+            degree[edge[1]] = 0
+        else:
+            degree[edge[1]] += 1
+    max_degress = 0
+    center = 0
+    for key, value in degree.items():
+        if value > max_degress:
+            max_degress = value
+            center = key
+    return center
+
+
+
 if __name__ == '__main__':
     vertices = 5
     edges = {(0, 1), (0, 4), (4, 1), (4, 3), (1, 3), (1, 2), (3, 2)}
@@ -125,4 +149,6 @@ if __name__ == '__main__':
     print(find_path_exist(grid))
     grid = [[1, 3], [3, 2]]
     print(find_path_exist(grid))
+    star = [[1, 2], [2, 3], [4, 2]]
+    print(star_node_find_center(star))
 
