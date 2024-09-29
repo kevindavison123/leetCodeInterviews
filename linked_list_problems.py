@@ -1,3 +1,6 @@
+import heapq
+
+
 class Node:
 
     # Constructor to initialize a new node with data
@@ -55,6 +58,20 @@ def reverse_linked_list_sublist(linked_list:Node, k):
 
     return prev_node
 
+def merge_sorted_linked_lists(linked_lists: list, k):
+    queue = []
+    for i in range(k):
+        if linked_lists[i] is not None:
+            heapq.heappush(queue, (linked_lists[i].data, linked_lists[i]))
+            dummy = Node(0)
+            tail = dummy
+            while queue:
+                current = heapq.heappop(queue)[1]
+                tail.next = current
+                tail = tail.next
+                if current.next != None:
+                    heapq.heappush(queue, (current.next.data, current.next))
+            return dummy.next
 
 
 

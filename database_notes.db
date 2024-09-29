@@ -1,0 +1,42 @@
+select CompanyName from Suppliers
+                    where exists (select productname from Products
+                                                     where products.SupplierID = suppliers.SupplierID
+                                                       and UnitPrice < 20);
+
+-- Aggregate
+select count(CustomerID), Country
+from Customers
+GROUP BY Country having count(CustomerID) > 5;
+
+-- Join
+select * from Orders
+    inner join Customers
+    on Orders.CustomerID = Customers.CustomerID;
+
+-- Self Join
+select c1.ContactName as C1Name, c2.ContactName as C2Name, c1.City from Customers c1, Customers c2
+    where c1.CustomerID != c2.CustomerID
+      and c1.City = c2.City
+      and c1.ContactName < c2.ContactName
+      ORDER BY c1.City;
+
+-- Null
+Select ProductName, UnitPrice * (UnitsInStock + coalesce(UnitsOnOrder, -1))
+from Products;
+
+Select ProductName, UnitPrice, UnitsInStock UnitsOnOrder
+from Products;
+
+
+--Stored Procedure
+create procedure SelectAllCustomers as
+       select * from Customers
+go;
+
+exec SelectAllCustomers;
+
+-- Stored Procedure with parameter
+CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
+AS
+SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
+GO;
