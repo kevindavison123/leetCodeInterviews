@@ -40,3 +40,11 @@ CREATE PROCEDURE SelectAllCustomers @City nvarchar(30), @PostalCode nvarchar(10)
 AS
 SELECT * FROM Customers WHERE City = @City AND PostalCode = @PostalCode
 GO;
+
+
+select strftime('%Y %m %d',OrderDate), SUM(`Order Details`.UnitPrice) as SumPrice
+from Orders
+    inner join `Order Details`
+    on Orders.OrderID = `Order Details`.OrderID
+    GROUP BY strftime('%Y %m %d',OrderDate)
+
